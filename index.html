@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <!-- PWA / Ana Ekrana Ekleme Ayarları -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Yıldıray Hoca">
-    <link rel="manifest" href='data:application/manifest+json;utf8,{"name":"Yıldıray Hoca Ödev Yönetimi","short_name":"Ödev","start_url":".","display":"standalone","background_color":"#f3f4f6","theme_color":"#c1121f","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2004/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23c1121f\'/%3E%3Cpath d=\'M25 50l15 15L75 35\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+    <meta name="apple-mobile-web-app-title" content="YHAP">
+    <link rel="manifest" href='data:application/manifest+json;utf8,{"name":"YHAP - Yıldıray Hocanın Aktif Programı","short_name":"YHAP","start_url":".","display":"standalone","background_color":"#f3f4f6","theme_color":"#c1121f","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2004/svg\' viewBox=\'0 0 100 100\'%3E%3Ccircle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23c1121f\'/%3E%3Cpath d=\'M25 50l15 15L75 35\' fill=\'none\' stroke=\'%23ffffff\' stroke-width=\'10\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2004/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23c1121f'/%3E%3Cpath d='M25 50l15 15L75 35' fill='none' stroke='%23ffffff' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     
-    <title>Yıldıray Hoca - Ödev Sistemi</title>
+    <title>YHAP - Yıldıray Hocanın Aktif Programı</title>
     
-    <!-- PDF ve Görsel Kaydetme Kütüphaneleri -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
         :root {
-            --primary: #c1121f; /* ÖSYM Kırmızısı */
-            --dark: #22223b;    /* Koyu Gri/Lacivert */
-            --light: #f3f4f6;   /* Açık Gri Arkaplan */
+            --primary: #c1121f;
+            --dark: #22223b;
+            --light: #f3f4f6;
             --white: #ffffff;
             --border: #e5e7eb;
         }
@@ -29,8 +27,8 @@
         body { background-color: var(--light); color: var(--dark); padding-bottom: 50px; }
         
         .header { background-color: var(--primary); color: var(--white); padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .header h1 { font-size: 24px; margin-bottom: 5px; }
-        .header p { font-size: 14px; opacity: 0.9; }
+        .header h1 { font-size: 28px; margin-bottom: 5px; letter-spacing: 2px; }
+        .header p { font-size: 14px; opacity: 0.9; font-weight: 500; letter-spacing: 1px; }
 
         .container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
         .card { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid var(--primary); }
@@ -55,14 +53,12 @@
         .btn-group { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
         .btn-group .btn { flex: 1; min-width: 150px; }
 
-        /* Geçici Liste */
         .preview-list { list-style: none; margin-top: 15px; }
         .preview-item { background: var(--light); padding: 10px 15px; border-radius: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); }
         .preview-item-info { font-size: 14px; }
         .preview-item-info strong { color: var(--primary); }
         .delete-btn { color: #e74c3c; cursor: pointer; font-weight: bold; font-size: 18px; background: none; border: none; }
 
-        /* Çıktı Rapor Alanı */
         #reportContainer { display: none; }
         .report-canvas { background: var(--white); padding: 30px; border-radius: 0; width: 100%; max-width: 800px; margin: 0 auto; box-shadow: none; border: 1px solid var(--border); position: relative; }
         
@@ -74,7 +70,9 @@
         .info-box { flex: 1; min-width: 45%; margin-bottom: 10px; font-size: 15px; }
         .info-box span { font-weight: bold; color: var(--primary); display: inline-block; width: 110px; }
         
-        .assignment-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        
+        .assignment-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; min-width: 600px; }
         .assignment-table th, .assignment-table td { border: 1px solid var(--border); padding: 12px; text-align: left; font-size: 14px; }
         .assignment-table th { background-color: var(--dark); color: var(--white); font-weight: 600; text-align: center; }
         .assignment-table td { color: #333; }
@@ -85,27 +83,24 @@
         .badge-25 { background-color: #457b9d; }
         .badge-24 { background-color: #1d3557; }
         
-        .report-footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border); }
+        .report-footer { text-align: center; font-size: 12px; color: #777; margin-top: 20px; padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.6; }
 
         @media (max-width: 600px) {
             .student-info { flex-direction: column; }
             .info-box { min-width: 100%; }
-            .report-canvas { padding: 15px; }
-            .assignment-table th, .assignment-table td { padding: 8px; font-size: 12px; }
-            .badge { min-width: 35px; font-size: 10px; }
+            .report-canvas { padding: 15px; border: none; }
         }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>Yıldıray Hoca Ödev Yönetimi</h1>
-        <p>TYT - AYT Soru Analizli Ödev Atama Sistemi</p>
+        <h1>YHAP</h1>
+        <p>YILDIRAY HOCANIN AKTİF PROGRAMI</p>
     </div>
 
     <div class="container" id="appContainer">
         
-        <!-- Öğrenci ve Tarih Bilgileri -->
         <div class="card">
             <div class="card-title">Genel Bilgiler</div>
             <div class="row">
@@ -130,7 +125,6 @@
             </div>
         </div>
 
-        <!-- Ödev Ekleme Paneli -->
         <div class="card">
             <div class="card-title">Ödev Ekle</div>
             <div class="form-group radio-group">
@@ -165,23 +159,18 @@
             </div>
             
             <button class="btn" onclick="addAssignment()">+ Listeye Ekle</button>
-
-            <!-- Eklenen Ödevler Önizleme -->
             <ul class="preview-list" id="previewList"></ul>
         </div>
 
-        <!-- Rapor Hazırlama Butonu -->
         <button class="btn" style="margin-bottom: 20px; background-color: var(--dark);" onclick="generateReport()">Karnesi / Listeyi Hazırla</button>
     </div>
 
-    <!-- Rapor Ekranı (Başlangıçta Gizli) -->
     <div class="container" id="reportContainer">
         <div class="card" style="border:none; box-shadow:none; background:transparent; padding:0;">
             
-            <!-- Asıl Kaydedilecek Alan -->
             <div id="exportArea" class="report-canvas">
                 <div class="report-header">
-                    <h2>ÖDEV KARNESİ</h2>
+                    <h2>YHAP ÖDEV KARNESİ</h2>
                     <h3>Başarı tesadüf değildir. Planlı çalışmanın eseridir.</h3>
                 </div>
                 
@@ -192,29 +181,28 @@
                     <div class="info-box"><span>Teslim Tarihi:</span> <b id="repDueDate"></b></div>
                 </div>
 
-                <table class="assignment-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 8%;">Tür</th>
-                            <th style="width: 15%;">Ders</th>
-                            <th style="width: 25%;">Konu</th>
-                            <th style="width: 22%;">Kaynak Kitap</th>
-                            <th style="width: 10%;">Soru</th>
-                            <th style="width: 20%;">Çıkmış Soru Dağılımı<br><span style="font-size:10px; font-weight:normal;">('26, '25, '24)</span></th>
-                        </tr>
-                    </thead>
-                    <tbody id="repTableBody">
-                        <!-- Javascript ile doldurulacak -->
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="assignment-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;">Tür</th>
+                                <th style="width: 15%;">Ders</th>
+                                <th style="width: 25%;">Konu</th>
+                                <th style="width: 22%;">Kaynak Kitap</th>
+                                <th style="width: 10%;">Soru</th>
+                                <th style="width: 20%;">Çıkmış Soru Dağılımı<br><span style="font-size:10px; font-weight:normal;">('26, '25, '24)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="repTableBody"></tbody>
+                    </table>
+                </div>
                 
                 <div class="report-footer">
-                    * Bu liste <b>Yıldıray Hoca Ödev Sistemi</b> tarafından oluşturulmuştur.<br>
+                    * Bu liste <b>YHAP (YILDIRAY HOCANIN AKTİF PROGRAMI)</b> tarafından oluşturulmuştur.<br>
                     * Çıkmış soru dağılımları son 3 yılın YKS verilerine dayanmaktadır.
                 </div>
             </div>
 
-            <!-- Kaydetme Butonları -->
             <div class="btn-group">
                 <button class="btn" onclick="exportAsImage()">Görsel Olarak İndir (WhatsApp)</button>
                 <button class="btn" style="background-color: var(--dark);" onclick="exportAsPDF()">PDF Olarak İndir</button>
@@ -224,13 +212,11 @@
     </div>
 
     <script>
-        // Bugünün tarihini varsayılan olarak atayalım
         document.getElementById('giveDate').valueAsDate = new Date();
         let tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 7);
         document.getElementById('dueDate').valueAsDate = tomorrow;
 
-        // Python'dan alınan tüm Excel veri tabanı
         const db = {"TYT": {"MATEMATİK": {"Temel Kavramlar": {"2026": 2, "2025": 3, "2024": 1}, "Sayı Basamakları": {"2026": 2, "2025": 1, "2024": 2}, "Bölünebilme Kuralları": {"2026": 1, "2025": 1, "2024": 1}, "OBEB-OKEK": {"2026": 0, "2025": 0, "2024": 1}, "Rasyonel Sayılar": {"2026": 2, "2025": 1, "2024": 2}, "Basit Eşitsizlikler": {"2026": 1, "2025": 1, "2024": 0}, "Mutlak Değer": {"2026": 1, "2025": 1, "2024": 2}, "Üslü Sayılar": {"2026": 1, "2025": 1, "2024": 1}, "Köklü Sayılar": {"2026": 1, "2025": 1, "2024": 1}, "Çarpanlara Ayırma": {"2026": 0, "2025": 0, "2024": 0}, "Oran - Orantı": {"2026": 0, "2025": 1, "2024": 0}, "Denklem Çözme": {"2026": 1, "2025": 1, "2024": 0}, "Problemler": {"2026": 12, "2025": 12, "2024": 11}, "Kümeler": {"2026": 1, "2025": 1, "2024": 1}, "Mantık": {"2026": 1, "2025": 1, "2024": 1}, "Fonksiyonlar": {"2026": 1, "2025": 1, "2024": 1}, "Polinomlar": {"2026": 0, "2025": 0, "2024": 0}, "Permütasyon - Kombinasyon": {"2026": 1, "2025": 1, "2024": 3}, "Olasılık": {"2026": 1, "2025": 1, "2024": 1}, "Veri - İstatistik": {"2026": 1, "2025": 1, "2024": 1}}, "TÜRKÇE": {"Ses Bilgisi": {"2026": 0, "2025": 0, "2024": 0}, "Dil Bilgisi": {"2026": 3, "2025": 3, "2024": 0}, "Noktalama İşaretleri": {"2026": 2, "2025": 2, "2024": 2}, "Yazım Kuralları": {"2026": 2, "2025": 2, "2024": 2}, "Paragraf": {"2026": 27, "2025": 26, "2024": 26}, "Cümlede Anlam": {"2026": 3, "2025": 3, "2024": 5}, "Sözcükte Anlam": {"2026": 3, "2025": 4, "2024": 5}}, "GEOMETRİ": {"Açılar ve Üçgenler": {"2026": 4, "2025": 4, "2024": 5}, "Çokgenler": {"2026": 1, "2025": 1, "2024": 1}, "Yamuk": {"2026": 1, "2025": 1, "2024": 1}, "Deltoid": {"2026": 1, "2025": 0, "2024": 0}, "Kare": {"2026": 0, "2025": 1, "2024": 0}, "Dikdörtgen": {"2026": 1, "2025": 1, "2024": 1}, "Katı Cisimler": {"2026": 2, "2025": 2, "2024": 2}}, "FİZİK": {"Madde Ve Özellikleri": {"2026": 1, "2025": 1, "2024": 1}, "Sıvıların Kaldırma Kuvveti": {"2026": 1, "2025": 0, "2024": 1}, "Isı, Sıcaklık ve Genleşme": {"2026": 1, "2025": 1, "2024": 1}, "Hareket ve Kuvvet": {"2026": 1, "2025": 1, "2024": 1}, "Elektrostatik": {"2026": 1, "2025": 1, "2024": 0}, "Optik": {"2026": 1, "2025": 1, "2024": 1}, "Manyetizma": {"2026": 0, "2025": 1, "2024": 1}, "Dalgalar": {"2026": 1, "2025": 1, "2024": 1}}, "KİMYA": {"Kimya Bilimi": {"2026": 0, "2025": 1, "2024": 1}, "Atomun Yapısı": {"2026": 1, "2025": 1, "2024": 1}, "Maddenin Halleri": {"2026": 1, "2025": 1, "2024": 1}, "Kimyasal Türler Arası Etkileşimler": {"2026": 2, "2025": 1, "2024": 1}, "Kimyasal Hesaplamalar": {"2026": 1, "2025": 1, "2024": 1}, "Asit, Baz ve Tuz": {"2026": 1, "2025": 1, "2024": 1}, "Karışımlar": {"2026": 1, "2025": 1, "2024": 1}}, "BİYOLOJİ": {"Canlıların Ortak Özellikleri": {"2026": 0, "2025": 1, "2024": 0}, "Canlıların Temel Bileşenleri": {"2026": 1, "2025": 0, "2024": 1}, "Hücre ve Organelleri": {"2026": 1, "2025": 0, "2024": 1}, "Madde Geçişleri": {"2026": 1, "2025": 1, "2024": 0}, "Canlıların Sınıflandırılması": {"2026": 0, "2025": 1, "2024": 1}, "Hücre Bölünmeleri ve Üreme": {"2026": 1, "2025": 1, "2024": 1}, "Kalıtım": {"2026": 1, "2025": 1, "2024": 1}, "Ekosistem Ekoloji": {"2026": 1, "2025": 0, "2024": 1}, "Bitkiler Biyolojisi": {"2026": 0, "2025": 1, "2024": 0}}, "TARİH": {"İlk ve Orta Çağlarda Türk Dünyası": {"2026": 1, "2025": 1, "2024": 1}, "Türklerin İslamiyet’i Kabulü ve İlk Türk İslam Devletleri": {"2026": 1, "2025": 1, "2024": 1}, "Beylikten Devlete Osmanlı": {"2026": 1, "2025": 1, "2024": 0}, "Dünya Gücü Osmanlı": {"2026": 0, "2025": 0, "2024": 1}, "Milli Mücadele": {"2026": 1, "2025": 1, "2024": 1}, "Atatürkçülük ve Türk İnkılabı": {"2026": 1, "2025": 1, "2024": 1}}, "COĞRAFYA": {"Harita Bilgisi": {"2026": 0, "2025": 1, "2024": 1}, "İklim Bilgisi": {"2026": 1, "2025": 1, "2024": 1}, "Nüfus ve Yerleşme": {"2026": 1, "2025": 1, "2024": 1}, "Türkiye’nin Yer Şekilleri": {"2026": 1, "2025": 0, "2024": 0}, "Bölgeler": {"2026": 1, "2025": 1, "2024": 1}, "Doğal Afetler": {"2026": 1, "2025": 1, "2024": 1}}, "FELSEFE": {"Felsefenin Alanı": {"2026": 1, "2025": 0, "2024": 1}, "Bilgi Felsefesi": {"2026": 1, "2025": 3, "2024": 1}, "Varlık Felsefesi": {"2026": 1, "2025": 0, "2024": 1}, "Ahlak Felsefesi": {"2026": 1, "2025": 1, "2024": 1}, "Din Felsefesi": {"2026": 1, "2025": 0, "2024": 1}}, "DİN": {"Bilgi ve İnanç": {"2026": 2, "2025": 1, "2024": 1}, "İbadetler": {"2026": 0, "2025": 1, "2024": 1}, "Ahlak ve Değerler": {"2026": 1, "2025": 1, "2024": 1}, "Hz. Muhammed (S.A.V)": {"2026": 1, "2025": 1, "2024": 1}, "İslam Düşüncesinde Yorumlar, Mezhepler": {"2026": 1, "2025": 1, "2024": 1}}}, "AYT": {"MATEMATİK": {"Temel Kavramlar": {"2026": 2, "2025": 1, "2024": 2}, "Sayı Basamakları": {"2026": 0, "2025": 1, "2024": 1}, "Bölme ve Bölünebilme": {"2026": 1, "2025": 1, "2024": 0}, "Mutlak Değer": {"2026": 1, "2025": 1, "2024": 0}, "Köklü Sayılar": {"2026": 1, "2025": 0, "2024": 0}, "Kümeler": {"2026": 1, "2025": 1, "2024": 1}, "Mantık": {"2026": 1, "2025": 1, "2024": 1}, "Fonksiyonlar": {"2026": 2, "2025": 2, "2024": 2}, "Polinomlar": {"2026": 1, "2025": 1, "2024": 0}, "2.Dereceden Denklemler": {"2026": 1, "2025": 1, "2024": 1}, "Parabol": {"2026": 1, "2025": 0, "2024": 1}, "Permütasyon-Kombinasyon": {"2026": 1, "2025": 1, "2024": 1}, "Olasılık": {"2026": 1, "2025": 1, "2024": 1}, "Binom Açılımı": {"2026": 1, "2025": 1, "2024": 1}, "Trigonometri": {"2026": 5, "2025": 5, "2024": 5}, "Logaritma": {"2026": 2, "2025": 2, "2024": 1}, "Diziler": {"2026": 1, "2025": 1, "2024": 1}, "Limit": {"2026": 2, "2025": 2, "2024": 2}, "Türev": {"2026": 3, "2025": 3, "2024": 3}, "İntegral": {"2026": 3, "2025": 3, "2024": 5}}, "GEOMETRİ": {"Üçgende Alan Benzerlik": {"2026": 1, "2025": 1, "2024": 0}, "Çember ve Daire": {"2026": 2, "2025": 2, "2024": 2}, "Noktanın Analitiği": {"2026": 1, "2025": 1, "2024": 1}, "Doğrunun Analitiği": {"2026": 2, "2025": 2, "2024": 3}, "Dönüşüm Geometrisi": {"2026": 1, "2025": 1, "2024": 0}, "Katı Cisimler": {"2026": 1, "2025": 1, "2024": 1}, "Çemberin Analitiği": {"2026": 1, "2025": 1, "2024": 1}}, "FİZİK": {"Newton’un Hareket Yasaları": {"2026": 1, "2025": 0, "2024": 1}, "Atışlar": {"2026": 1, "2025": 1, "2024": 1}, "İş, Güç ve Enerji": {"2026": 1, "2025": 1, "2024": 1}, "Kuvvet, Tork ve Denge": {"2026": 1, "2025": 0, "2024": 0}, "Paralel Levhalar ve Sığa": {"2026": 1, "2025": 0, "2024": 0}, "Manyetik Alan ve Manyetik Kuvvet": {"2026": 1, "2025": 1, "2024": 1}, "İndüksiyon, Alternatif Akım ve Transformatörler": {"2026": 1, "2025": 1, "2024": 2}, "Düzgün Çembersel Hareket": {"2026": 1, "2025": 1, "2024": 0}, "Dönme, Yuvarlanma ve Açısal Momentum": {"2026": 1, "2025": 0, "2024": 0}, "Basit Harmonik Hareket": {"2026": 1, "2025": 1, "2024": 1}, "Dalga Mekaniği": {"2026": 1, "2025": 2, "2024": 1}, "Atom Fiziğine Giriş ve Radyoaktivite": {"2026": 1, "2025": 1, "2024": 1}, "Modern Fizik": {"2026": 1, "2025": 0, "2024": 1}, "Modern Fiziğin Teknolojideki Uygulamaları": {"2026": 1, "2025": 1, "2024": 1}}, "KİMYA": {"Modern Atom Teorisi": {"2026": 1, "2025": 1, "2024": 1}, "Gazlar": {"2026": 2, "2025": 1, "2024": 1}, "Sıvı Çözeltiler": {"2026": 1, "2025": 1, "2024": 2}, "Kimyasal Tepkimelerde Enerji": {"2026": 1, "2025": 1, "2024": 1}, "Kimyasal Tepkimelerde Hız": {"2026": 1, "2025": 1, "2024": 1}, "Kimyasal Tepkimelerde Denge": {"2026": 1, "2025": 2, "2024": 1}, "Asit-Baz Dengesi": {"2026": 1, "2025": 0, "2024": 1}, "Kimya ve Elektrik": {"2026": 1, "2025": 2, "2024": 2}, "Organik Kimya": {"2026": 4, "2025": 4, "2024": 3}}, "BİYOLOJİ": {"Endokrin Sistem": {"2026": 1, "2025": 0, "2024": 1}, "Destek ve Hareket Sistemi": {"2026": 1, "2025": 0, "2024": 0}, "Dolaşım Sistemi": {"2026": 1, "2025": 1, "2024": 1}, "Üriner Sistem": {"2026": 1, "2025": 1, "2024": 0}, "Üreme Sistemi ve Embriyonik Gelişim": {"2026": 1, "2025": 1, "2024": 0}, "Komünite ve Popülasyon Ekolojisi": {"2026": 2, "2025": 1, "2024": 2}, "Genden Proteine": {"2026": 2, "2025": 2, "2024": 2}, "Fotosentez ve Kemosentez": {"2026": 1, "2025": 1, "2024": 1}, "Hücresel Solunum": {"2026": 1, "2025": 1, "2024": 0}, "Bitki Biyolojisi": {"2026": 2, "2025": 2, "2024": 2}}, "EDEBİYAT": {"Anlam Bilgisi": {"2026": 6, "2025": 6, "2024": 6}, "Şiir Bilgisi": {"2026": 2, "2025": 3, "2024": 2}, "Edebi Sanatlar": {"2026": 1, "2025": 1, "2024": 2}, "İslamiyet Öncesi Türk Edebiyatı ve Geçiş Dönemi": {"2026": 2, "2025": 1, "2024": 1}, "Halk Edebiyatı": {"2026": 1, "2025": 0, "2024": 1}, "Divan Edebiyatı": {"2026": 5, "2025": 3, "2024": 4}, "Tanzimat Edebiyatı": {"2026": 1, "2025": 1, "2024": 1}, "Servet-i Fünun Ve Fecr-i Ati Edebiyatı": {"2026": 1, "2025": 1, "2024": 1}, "Milli Edebiyat": {"2026": 1, "2025": 1, "2024": 1}, "Cumhuriyet Dönemi Edebiyatı": {"2026": 3, "2025": 2, "2024": 3}, "Batı Edebiyat Akımları": {"2026": 1, "2025": 1, "2024": 1}}, "COĞRAFYA": {"Ekosistem": {"2026": 2, "2025": 3, "2024": 2}, "Nüfus Politikaları": {"2026": 1, "2025": 0, "2024": 1}, "Yerleşmelerin Özellikleri": {"2026": 1, "2025": 2, "2024": 2}, "Uluslararası Ulaşım Hatları": {"2026": 1, "2025": 0, "2024": 1}, "Ekonomik Faaliyetler ve Doğal Kaynaklar": {"2026": 1, "2025": 1, "2024": 1}, "Geçmişten Geleceğe Şehir ve Ekonomi": {"2026": 2, "2025": 1, "2024": 1}, "Türkiye’de Ekonomi": {"2026": 2, "2025": 3, "2024": 0}, "Türkiye’nin İşlevsel Bölgeleri ve Kalkınma Projeleri": {"2026": 1, "2025": 1, "2024": 1}, "Küresel Ticaret": {"2026": 1, "2025": 1, "2024": 1}, "Kültür Bölgeleri": {"2026": 2, "2025": 1, "2024": 1}, "Çevre ve Toplum": {"2026": 3, "2025": 2, "2024": 4}}, "TARİH": {"Tarih ve Zaman": {"2026": 1, "2025": 1, "2024": 1}, "İnsanlığın İlk Dönemleri": {"2026": 1, "2025": 1, "2024": 1}, "İlk ve Orta Çağlarda Türk Dünyası": {"2026": 2, "2025": 2, "2024": 2}, "İslam Medeniyetinin Doğuşu": {"2026": 1, "2025": 1, "2024": 1}, "Türklerin İslamiyet’i Kabulü ve İlk Türk İslam Devletleri": {"2026": 1, "2025": 1, "2024": 2}, "Yerleşme ve Devletleşme Sürecinde Selçuklu Türkiyesi": {"2026": 1, "2025": 1, "2024": 0}, "Beylikten Devlete Osmanlı": {"2026": 1, "2025": 2, "2024": 2}, "Devletleşme Sürecinde Savaşçılar ve Askerler": {"2026": 1, "2025": 0, "2024": 0}, "Değişen Dünya Dengeleri Karşısında Osmanlı Siyaseti": {"2026": 1, "2025": 0, "2024": 0}, "Değişim Çağında Avrupa ve Osmanlı": {"2026": 1, "2025": 0, "2024": 0}, "Uluslararası İlişkilerde Denge Stratejisi (1774-1914)": {"2026": 1, "2025": 3, "2024": 2}, "XX. Yüzyıl Başlarında Osmanlı Devleti ve Dünya": {"2026": 2, "2025": 1, "2024": 3}, "Milli Mücadele": {"2026": 4, "2025": 4, "2024": 3}, "Atatürkçülük ve Türk İnkılabı": {"2026": 1, "2025": 1, "2024": 2}, "İki Savaş Arasındaki Dönemde Türkiye ve Dünya": {"2026": 1, "2025": 2, "2024": 0}, "II. Dünya Savaşı Sürecinde - Sonrasında Türkiye ve Dünya": {"2026": 1, "2025": 0, "2024": 1}}, "FELSEFE": {"Bilgi Felsefesi": {"2026": 1, "2025": 1, "2024": 1}, "Varlık Felsefesi": {"2026": 1, "2025": 2, "2024": 0}, "20. Yüzyıl Felsefesi": {"2026": 1, "2025": 0, "2024": 0}, "Mantığa Giriş": {"2026": 1, "2025": 1, "2024": 1}, "Klasik Mantık": {"2026": 2, "2025": 0, "2024": 2}, "Psikoloji Bilimini Tanıyalım": {"2026": 1, "2025": 0, "2024": 1}, "Psikolojinin Temel Süreçleri": {"2026": 2, "2025": 2, "2024": 0}, "Birey ve Toplum": {"2026": 1, "2025": 1, "2024": 0}, "Toplumsal Yapı": {"2026": 1, "2025": 0, "2024": 1}, "Toplum ve Kültür": {"2026": 1, "2025": 0, "2024": 1}}, "DİN": {"Allah, İnsan İlişkisi": {"2026": 1, "2025": 1, "2024": 0}, "Dünya ve Ahiret": {"2026": 1, "2025": 0, "2024": 0}, "Kur’an’da Bazı Kavramlar": {"2026": 1, "2025": 1, "2024": 0}, "İslam ve Bilim": {"2026": 1, "2025": 1, "2024": 1}, "Güncel Dini Meseleler": {"2026": 1, "2025": 0, "2024": 0}, "Hint ve Çin Dinleri": {"2026": 1, "2025": 0, "2024": 0}}}};
 
         let assignments = [];
@@ -275,12 +261,10 @@
             if (!topic) { alert("Lütfen konu seçiniz."); return; }
 
             const stats = db[type][subject][topic];
-
             assignments.push({ id: Date.now(), type, subject, topic, book, qCount, stats });
             
             document.getElementById('bookName').value = '';
             document.getElementById('questionCount').value = '';
-            
             updatePreview();
         }
 
@@ -308,19 +292,14 @@
         }
 
         function generateReport() {
-            if (assignments.length === 0) {
-                alert("Lütfen önce listeye ödev ekleyin.");
-                return;
-            }
+            if (assignments.length === 0) { alert("Lütfen önce listeye ödev ekleyin."); return; }
 
             const sName = document.getElementById('studentName').value || "Belirtilmedi";
             const tName = document.getElementById('teacherName').value || "Yıldıray Hoca";
             
-            // Tarihleri DD.MM.YYYY formatına çevir
             const formatD = (dateStr) => {
                 if(!dateStr) return "-";
-                const d = new Date(dateStr);
-                return d.toLocaleDateString('tr-TR');
+                return new Date(dateStr).toLocaleDateString('tr-TR');
             };
 
             document.getElementById('repStudent').innerText = sName;
@@ -333,7 +312,6 @@
 
             assignments.forEach(a => {
                 const tr = document.createElement('tr');
-                // rozet renkleri: 2026: kırmızı, 2025: mavi, 2024: lacivert
                 let statHtml = `
                     <div class="stats-badges">
                         <div class="badge badge-26" title="2026">26: ${a.stats["2026"] || 0}</div>
@@ -367,11 +345,27 @@
             window.scrollTo(0,0);
         }
 
-        function exportAsImage() {
+        function prepareForExport() {
             const area = document.getElementById('exportArea');
-            html2canvas(area, { scale: 2, useCORS: true }).then(canvas => {
+            area.style.width = '800px';
+            area.style.maxWidth = '800px';
+            area.style.padding = '30px';
+            return area;
+        }
+
+        function restoreAfterExport(area) {
+            area.style.width = '';
+            area.style.maxWidth = '';
+            area.style.padding = '';
+        }
+
+        function exportAsImage() {
+            const area = prepareForExport();
+            
+            html2canvas(area, { scale: 2, useCORS: true, windowWidth: 800 }).then(canvas => {
+                restoreAfterExport(area);
                 const link = document.createElement('a');
-                link.download = 'Odev_Karnesi_' + (document.getElementById('studentName').value || 'Liste') + '.png';
+                link.download = 'YHAP_Karnesi_' + (document.getElementById('studentName').value || 'Liste') + '.png';
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             });
@@ -379,20 +373,21 @@
 
         function exportAsPDF() {
             const { jsPDF } = window.jspdf;
-            const area = document.getElementById('exportArea');
+            const area = prepareForExport();
             
-            html2canvas(area, { scale: 2, useCORS: true }).then(canvas => {
+            html2canvas(area, { scale: 2, useCORS: true, windowWidth: 800 }).then(canvas => {
+                restoreAfterExport(area);
+                
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();
                 const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
                 
                 pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                pdf.save('Odev_Karnesi_' + (document.getElementById('studentName').value || 'Liste') + '.pdf');
+                pdf.save('YHAP_Karnesi_' + (document.getElementById('studentName').value || 'Liste') + '.pdf');
             });
         }
 
-        // Başlangıç yüklemesi
         window.onload = () => { loadSubjects(); };
     </script>
 </body>
